@@ -1,0 +1,20 @@
+{
+	"name" : "quiqqer/ckeditor3",
+	"description" : "CKEditor for the QUIQQER CMS",
+	"tags" : ["wysiwyg", "ckeditor", "quiqqer"],
+	"version" : "3.6.4",
+	"author" : ["pcsg <support@pcsg.de>"],
+
+	"repositories" : {
+        "type" : "git",
+      	"url"  : "ssh://git@rico/~/repositories/packages/ckeditor3.git"
+    },
+
+    "bugs" : {
+        "url" : "http://bugs.quiqqer.com/smarty3"
+    },
+
+    "require": {
+        "quiqqer/quiqqer" : "1.*"
+    }
+}
