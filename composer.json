@@ -1,5 +1,6 @@
 {
 	"name" : "quiqqer/ckeditor3",
+	"type" : "quiqqer-library",
 	"description" : "CKEditor for the QUIQQER CMS",
 	"tags" : ["wysiwyg", "ckeditor", "quiqqer"],
 	"version" : "3.6.4",
