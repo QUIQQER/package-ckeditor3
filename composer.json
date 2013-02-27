@@ -16,6 +16,6 @@
     },
 
     "require": {
-        "quiqqer/quiqqer" : "<0.*"
+        "quiqqer/quiqqer" : ">=0.9"
     }
 }
