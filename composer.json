@@ -2,17 +2,18 @@
 	"name" : "quiqqer/ckeditor3",
 	"type" : "quiqqer-library",
 	"description" : "CKEditor for the QUIQQER CMS",
-	"tags" : ["wysiwyg", "ckeditor", "quiqqer"],
 	"version" : "1.0.2",
-	"author" : ["pcsg <support@pcsg.de>"],
+	"license" : "GPL-2.0+",
 
-	"repositories" : {
-        "type" : "git",
-      	"url"  : "ssh://git@rico/~/repositories/packages/ckeditor3.git"
-    },
+	"authors" : [{
+        "name": "Henning Leutz",
+        "email": "leutz@pcsg.de",
+        "homepage": "http://www.pcsg.de",
+        "role": "Developer"
+    }],
 
-    "bugs" : {
-        "url" : "http://bugs.quiqqer.com/smarty3"
+    "support" : {
+        "email" : "support@pcsg.de"
     },
 
     "require": {
