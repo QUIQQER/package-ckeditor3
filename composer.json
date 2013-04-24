@@ -1,11 +1,11 @@
 {
-	"name" : "quiqqer/ckeditor3",
-	"type" : "quiqqer-library",
-	"description" : "CKEditor for the QUIQQER CMS",
-	"version" : "1.0.3",
-	"license" : "GPL-2.0+",
+    "name" : "quiqqer/ckeditor3",
+    "type" : "quiqqer-library",
+    "description" : "CKEditor for the QUIQQER CMS",
+    "version" : "1.0.4",
+    "license" : "GPL-2.0+",
 
-	"authors" : [{
+    "authors" : [{
         "name": "Henning Leutz",
         "email": "leutz@pcsg.de",
         "homepage": "http://www.pcsg.de",

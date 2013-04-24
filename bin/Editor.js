@@ -9,20 +9,21 @@
 
 define('package/quiqqer/ckeditor3/bin/Editor', [
 
-    'classes/editor/Editor'
+    'controls/editor/Editor'
 
 ], function(Editor)
 {
     return new Class({
 
         Extends : Editor,
-        Type    : 'QUI.classes.editor.Editor.CKEditor3',
+        Type    : 'QUI.controls.editor.Editor.CKEditor3',
 
-        Binds   : [
+        Binds : [
              '$onDestroy',
              '$onDraw',
              '$onSetContent',
-             '$onGetContent'
+             '$onGetContent',
+             '$onDrop'
         ],
 
         initialize : function(Manager, options)
@@ -33,7 +34,69 @@ define('package/quiqqer/ckeditor3/bin/Editor', [
                 onDestroy    : this.$onDestroy,
                 onDraw       : this.$onDraw,
                 onSetContent : this.$onSetContent,
-                onGetContent : this.$onGetContent
+                onGetContent : this.$onGetContent,
+                onDrop       : this.$onDrop
+            });
+        },
+
+        /**
+         * Load the CKEditor Instance into an Textarea or DOMNode Element
+         *
+         * @param {DOMNode} Container
+         * @param {QUI.controls.editor.Editor} Editor
+         */
+        loadInstance : function(Container, Editor)
+        {
+            if ( typeof CKEDITOR === 'undefined' ) {
+                return;
+            }
+
+            var Instance = Container;
+
+            if ( Instance.nodeName != 'TEXTAREA' ) {
+                Instance = Instance.getElement( 'textarea' );
+            }
+
+            var instance = Instance.get( 'id' );
+
+            if ( CKEDITOR.instances[ instance ] ) {
+                CKEDITOR.instances[ instance ].destroy( true );
+            }
+
+            Editor.setAttribute( 'instancename', instance );
+
+            /*
+            CKEDITOR.plugins.addExternal(
+                'pcsg_image',
+                URL_OPT_DIR +'base/bin/pcsgEditorPlugins/image/'
+            );
+
+            CKEDITOR.plugins.addExternal(
+                'pcsg_link',
+                URL_OPT_DIR +'base/bin/pcsgEditorPlugins/link/'
+            );
+
+            CKEDITOR.plugins.addExternal(
+                'pcsg_short',
+                URL_OPT_DIR +'base/bin/pcsgEditorPlugins/short/'
+            );
+
+            CKEDITOR.plugins.addExternal(
+                'pcsg_youtube',
+                URL_OPT_DIR +'base/bin/pcsgEditorPlugins/youtube/'
+            );
+            */
+            CKEDITOR.replace(instance, {
+                language     : QUI.Locale.getCurrent(),
+                baseHref     : URL_DIR,
+                height       : Instance.getSize().y - 140,
+                width        : Instance.getSize().x + 20,
+                // toolbar      : CKEDITOR_NEXGAM_TOOLBAR,
+                // contentsCss  : CKEDITOR_NEXGAM_CSS,
+                // bodyClass    : CKEDITOR_NEXGAM_BODY_CLASS,
+                // plugins      : CKEDITOR_NEXGAM_PLUGINS,
+                // templates_files : [URL_OPT_DIR +'base/bin/pcsgEditorPlugins/templates.php'],
+                baseFloatZIndex : 100
             });
         },
 
@@ -48,7 +111,7 @@ define('package/quiqqer/ckeditor3/bin/Editor', [
 
             if ( CKEDITOR.instances[ Instance.name ] ) {
                 CKEDITOR.instances[ Instance.name ].destroy( true );
-            };
+            }
         },
 
         /**
@@ -62,8 +125,10 @@ define('package/quiqqer/ckeditor3/bin/Editor', [
         {
             // load CKEDITOR
             requirejs([
+
                 URL_DIR +'packages/quiqqer/ckeditor3/bin/ckeditor/ckeditor.js'
-            ], function(Container, Editor)
+
+            ], function(CKE)
             {
                 // CKEditor aufbauen
                 CKEDITOR_BASEPATH = URL_DIR;
@@ -100,7 +165,7 @@ define('package/quiqqer/ckeditor3/bin/Editor', [
                          instance.editor.name !== this.getAttribute( 'instancename' ) )
                     {
                         return;
-                    };
+                    }
 
                     this.setInstance( instance.editor );
                     this.fireEvent( 'loaded', [ this, instance.editor ] );
@@ -111,7 +176,7 @@ define('package/quiqqer/ckeditor3/bin/Editor', [
 
                 Editor.loadInstance( Container, Editor );
 
-            }.bind( this, [ Container, Editor ] ));
+            }.bind( this ));
         },
 
         /**
@@ -124,7 +189,7 @@ define('package/quiqqer/ckeditor3/bin/Editor', [
         {
             if ( Editor.getInstance() ) {
                 Editor.getInstance().setData( content );
-            };
+            }
         },
 
         /**
@@ -137,68 +202,20 @@ define('package/quiqqer/ckeditor3/bin/Editor', [
         {
             if ( Editor.getInstance() ) {
                 Editor.setAttribute( 'content', Editor.getInstance().getData() );
-            };
+            }
         },
 
         /**
-         * Load the CKEditor Instance into an Textarea or DOMNode Element
          *
-         * @param {DOMNode} Container
-         * @param {QUI.classes.Editor} Editor
+         * @param {Object} params
          */
-        loadInstance : function(Container, Editor)
+        $onDrop : function(params)
         {
-            if (typeof CKEDITOR === 'undefined') {
-                return;
-            };
+            var Instance = this.getInstance();
 
-            var Instance = Container;
-
-            if (Instance.nodeName != 'TEXTAREA') {
-                Instance = Instance.getElement('textarea');
-            };
-
-            var instance = Instance.get('id');
-
-            if (CKEDITOR.instances[ instance ]) {
-                CKEDITOR.instances[ instance ].destroy(true);
-            };
-
-            Editor.setAttribute('instancename', instance);
-
-            /*
-            CKEDITOR.plugins.addExternal(
-                'pcsg_image',
-                URL_OPT_DIR +'base/bin/pcsgEditorPlugins/image/'
-            );
-
-            CKEDITOR.plugins.addExternal(
-                'pcsg_link',
-                URL_OPT_DIR +'base/bin/pcsgEditorPlugins/link/'
-            );
-
-            CKEDITOR.plugins.addExternal(
-                'pcsg_short',
-                URL_OPT_DIR +'base/bin/pcsgEditorPlugins/short/'
-            );
-
-            CKEDITOR.plugins.addExternal(
-                'pcsg_youtube',
-                URL_OPT_DIR +'base/bin/pcsgEditorPlugins/youtube/'
-            );
-            */
-            CKEDITOR.replace(instance, {
-                language     : QUI.L.getCurrent(),
-                baseHref     : URL_DIR,
-                height       : Instance.getSize().y - 140,
-                width        : Instance.getSize().x + 20,
-                // toolbar      : CKEDITOR_NEXGAM_TOOLBAR,
-                // contentsCss  : CKEDITOR_NEXGAM_CSS,
-                // bodyClass    : CKEDITOR_NEXGAM_BODY_CLASS,
-                // plugins      : CKEDITOR_NEXGAM_PLUGINS,
-                // templates_files : [URL_OPT_DIR +'base/bin/pcsgEditorPlugins/templates.php'],
-                baseFloatZIndex : 100
-            });
+            for ( var i = 0, len = params.length; i < len; i++ ) {
+                Instance.insertHtml( "<img src="+ params[ i ].url +" />" );
+            }
         }
     });
 });
