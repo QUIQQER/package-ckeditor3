@@ -16,7 +16,7 @@ define('package/quiqqer/ckeditor3/bin/Editor', [
     return new Class({
 
         Extends : Editor,
-        Type    : 'QUI.controls.editor.Editor.CKEditor3',
+        Type    : 'package/quiqqer/ckeditor3/bin/Editor',
 
         Binds : [
              '$onDestroy',
