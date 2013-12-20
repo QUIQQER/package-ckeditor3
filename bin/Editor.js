@@ -9,7 +9,7 @@
 
 define('package/quiqqer/ckeditor3/bin/Editor', [
 
-    'controls/editor/Editor'
+    'controls/editors/Editor'
 
 ], function(Editor)
 {
