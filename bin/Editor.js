@@ -13,6 +13,8 @@ define('package/quiqqer/ckeditor3/bin/Editor', [
 
 ], function(Editor)
 {
+    "use strict";
+
     return new Class({
 
         Extends : Editor,
